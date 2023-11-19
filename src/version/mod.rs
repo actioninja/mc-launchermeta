@@ -1,50 +1,12 @@
+mod rule;
+
 use std::collections::BTreeMap;
 use std::fmt;
-use std::fmt::Write;
 use std::str::FromStr;
 use serde::{de, Deserialize, Deserializer, Serialize};
-use serde::de::{Error, MapAccess, SeqAccess, value, Visitor};
+use serde::de::{Error, MapAccess, SeqAccess, Visitor};
+use rule::Rule;
 use crate::VersionKind;
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OsName {
-    Windows,
-    Osx,
-    Linux,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OsArch {
-    X86,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Os {
-    pub name: Option<OsName>,
-    pub version: Option<String>,
-    pub arch: Option<OsArch>,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(rename_all = "lowercase")]
-pub enum RuleAction {
-    Allow,
-    Disallow,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Rule {
-    pub action: RuleAction,
-    #[serde(default)]
-    pub os: Option<Os>,
-    #[serde(default)]
-    pub features: BTreeMap<String, bool>,
-}
-
 
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize)]
