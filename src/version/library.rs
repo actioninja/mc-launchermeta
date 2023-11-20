@@ -6,6 +6,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.                   /
 ////////////////////////////////////////////////////////////////////////////////
 
+//! Information about the libraries used by the game
+
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use crate::version::rule::Rule;
@@ -40,10 +42,18 @@ pub type Extract = BTreeMap<String, Vec<String>>;
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Library {
+    /// A list of artifacts to potentially download for the library
     pub downloads: Option<Downloads>,
+    /// The name of the library, in the format `group:name:version`
     pub name: String,
+    /// Information on how to extract the library.
+    ///
+    /// This is used for natives, and is a map of the files to extract to the directories to extract
     #[serde(default)]
     pub extract: Option<Extract>,
+    /// Information on natives for the version
+    ///
+    /// This was used in older versions of the format
     #[serde(default)]
     pub natives: Option<Natives>,
     #[serde(default)]

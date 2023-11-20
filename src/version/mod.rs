@@ -6,9 +6,14 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.                   /
 ////////////////////////////////////////////////////////////////////////////////
 
-mod rule;
-mod logging;
-mod library;
+//! This module contains the types used by the version JSON files.
+//!
+//! These files specify info about how to run the game, and are fetched from the URLs specified in
+//! the version manifest.
+
+pub mod rule;
+pub mod logging;
+pub mod library;
 
 use std::fmt;
 use std::str::FromStr;

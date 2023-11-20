@@ -6,6 +6,9 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.                   /
 ////////////////////////////////////////////////////////////////////////////////
 
+//! Rules that must pass before a field is considered "valid," ie native libraries for a specific
+//! OS, or features that must be enabled.
+
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 

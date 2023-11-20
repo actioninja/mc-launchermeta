@@ -6,6 +6,11 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.                   /
 ////////////////////////////////////////////////////////////////////////////////
 
+
+//! Some kind of information about logging, seemingly used to inform log4j about the logging
+//!
+//! I am unsure how this is used.
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
