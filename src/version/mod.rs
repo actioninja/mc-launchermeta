@@ -1,25 +1,27 @@
 mod rule;
+mod logging;
+mod library;
 
-use std::collections::BTreeMap;
 use std::fmt;
 use std::str::FromStr;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde::de::{Error, MapAccess, SeqAccess, Visitor};
+use library::Library;
+use logging::Logging;
 use rule::Rule;
 use crate::VersionKind;
 
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize)]
-#[serde(deny_unknown_fields)]
 pub struct Argument {
     pub rules: Vec<Rule>,
     pub values: Vec<String>,
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash)]
 struct ArrayOrStringHelper(pub Vec<String>);
 
-/// deserialize either an array of strings or a single string
+/// deserialize either an array of strings or a single string into always a vector of strings
 impl<'de> Deserialize<'de> for ArrayOrStringHelper {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
         where D: Deserializer<'de>
@@ -66,11 +68,6 @@ impl FromStr for Argument {
 }
 
 impl<'de> Deserialize<'de> for Argument {
-    /// Deserialize an `Argument`.
-    /// Arguments can be either a string or an object with a `rules` and `value` field.
-    /// rules is a list of `Rule`s, and value is either a string or a list of strings.
-    /// If it is a string, it is converted to an `Argument` with no rules and a single value.
-    /// If it is an object, it is deserialized as normal.
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
         where D: Deserializer<'de>
     {
@@ -110,9 +107,6 @@ impl<'de> Deserialize<'de> for Argument {
                             if value.is_some() {
                                 return Err(de::Error::duplicate_field("value"));
                             }
-                            // value can be either a string or a list of strings
-
-
                             value = Some(map.next_value::<ArrayOrStringHelper>()?.0);
                         }
                         _ => {
@@ -179,70 +173,6 @@ pub struct Downloads {
 pub struct JavaVersion {
     pub component: String,
     pub major_version: u8,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct LibraryArtifact {
-    pub path: String,
-    pub sha1: String,
-    pub size: u64,
-    pub url: String,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct LibraryDownloads {
-    #[serde(default)]
-    pub artifact: Option<LibraryArtifact>,
-    #[serde(default)]
-    pub classifiers: Option<BTreeMap<String, LibraryArtifact>>,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-pub struct LibraryNatives {
-    pub linux: Option<String>,
-    pub osx: Option<String>,
-    pub windows: Option<String>,
-}
-
-pub type LibraryExtract = BTreeMap<String, Vec<String>>;
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Library {
-    pub downloads: Option<LibraryDownloads>,
-    pub name: String,
-    #[serde(default)]
-    pub extract: Option<LibraryExtract>,
-    #[serde(default)]
-    pub natives: Option<LibraryNatives>,
-    #[serde(default)]
-    pub rules: Option<Vec<Rule>>,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct LoggingFile {
-    pub id: String,
-    pub sha1: String,
-    pub size: u64,
-    pub url: String,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct LoggingEntry {
-    pub argument: String,
-    pub file: LoggingFile,
-    #[serde(rename = "type")]
-    pub kind: String,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Logging {
-    pub client: LoggingEntry,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
