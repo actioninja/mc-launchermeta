@@ -6,6 +6,7 @@ rust-version = "1.56.0"
 authors = ["actioninja"]
 license = "MPL-2.0"
 description = "A library for interacting with the Minecraft Launcher Metadata API"
+include = ["src/**", "Cargo.toml", "README.md", "LICENSE.md"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
