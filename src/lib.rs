@@ -2,6 +2,9 @@ use serde::{Deserialize, Serialize};
 
 pub mod version_manifest;
 pub mod version;
+pub mod asset_index;
+
+pub const VERSION_MANIFEST_URL: &str = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]

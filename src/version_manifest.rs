@@ -26,3 +26,17 @@ pub struct Manifest {
     pub latest: Latest,
     pub versions: Vec<Version>,
 }
+
+impl Manifest {
+    pub fn get_version(&self, id: &str) -> Option<&Version> {
+        self.versions.iter().find(|v| v.id == id)
+    }
+
+    pub fn get_latest(&self, kind: VersionKind) -> Option<&Version> {
+        match kind {
+            VersionKind::Release => self.get_version(&self.latest.release),
+            VersionKind::Snapshot => self.get_version(&self.latest.snapshot),
+            _ => None,
+        }
+    }
+}
