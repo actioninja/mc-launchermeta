@@ -6,12 +6,18 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.                   /
 ////////////////////////////////////////////////////////////////////////////////
 
+//! A simple crate that defines the types used by the Minecraft version manifest.
+//!
+//! This crate deliberately does not include any code to actually fetch from the endpoints, as to
+//! not tie it to any particular HTTP client.
+
 use serde::{Deserialize, Serialize};
 
 pub mod version_manifest;
 pub mod version;
 pub mod asset_index;
 
+/// The current URL to get the version manifest from.
 pub const VERSION_MANIFEST_URL: &str = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash, Serialize, Deserialize)]
@@ -23,21 +29,4 @@ pub enum VersionKind {
     OldAlpha,
     OldSnapshot,
     Experiment,
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        println!("{:?}", serde_json::to_string(&VersionKind::Release));
-        println!("{:?}", serde_json::to_string(&VersionKind::Snapshot));
-        println!("{:?}", serde_json::to_string(&VersionKind::OldBeta));
-        println!("{:?}", serde_json::to_string(&VersionKind::OldAlpha));
-        println!("{:?}", serde_json::to_string(&VersionKind::OldSnapshot));
-        println!("{:?}", serde_json::to_string(&VersionKind::Experiment));
-
-        assert_eq!(4, 4);
-    }
 }
