@@ -3,9 +3,11 @@ name = "mc-metadata"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.56.0"
+description = "A crate providing types for the Minecraft Launcher Metadata API"
 authors = ["actioninja"]
 license = "MPL-2.0"
-description = "A library for interacting with the Minecraft Launcher Metadata API"
+categories = ["api-bindings", "game-development"]
+keywords = ["minecraft", "launcher", "metadata", "api", "json"]
 include = ["src/**", "Cargo.toml", "README.md", "LICENSE.md"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
