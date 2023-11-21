@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2023. Rob Bailey                                              /
 // This Source Code Form is subject to the terms of the Mozilla Public         /
@@ -8,6 +7,7 @@
 
 use serde::{Deserialize, Serialize};
 
+/// Information about assets used by the game
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct AssetIndex {
     pub objects: Vec<Object>,

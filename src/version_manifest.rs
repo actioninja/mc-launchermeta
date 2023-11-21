@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2023. Rob Bailey                                              /
 // This Source Code Form is subject to the terms of the Mozilla Public         /
@@ -7,6 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 use serde::{Deserialize, Serialize};
+
 use crate::VersionKind;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]

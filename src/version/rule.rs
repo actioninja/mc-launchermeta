@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2023. Rob Bailey                                              /
 // This Source Code Form is subject to the terms of the Mozilla Public         /
@@ -9,8 +8,9 @@
 //! Rules that must pass before a field is considered "valid," ie native libraries for a specific
 //! OS, or features that must be enabled.
 
-use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
+
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]

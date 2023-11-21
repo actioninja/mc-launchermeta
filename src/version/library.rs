@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2023. Rob Bailey                                              /
 // This Source Code Form is subject to the terms of the Mozilla Public         /
@@ -8,8 +7,10 @@
 
 //! Information about the libraries used by the game
 
-use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
+
+use serde::{Deserialize, Serialize};
+
 use crate::version::rule::Rule;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]

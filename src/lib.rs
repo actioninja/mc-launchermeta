@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2023. Rob Bailey                                              /
 // This Source Code Form is subject to the terms of the Mozilla Public         /
@@ -26,16 +25,16 @@
 //!
 //! All product and company names are trademarks™ or registered® trademarks of their respective
 //! holders. Use of them does not imply any affiliation with or endorsement by them.
-//!
 
 use serde::{Deserialize, Serialize};
 
-pub mod version_manifest;
-pub mod version;
 pub mod asset_index;
+pub mod version;
+pub mod version_manifest;
 
 /// The current URL to get the version manifest from.
-pub const VERSION_MANIFEST_URL: &str = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
+pub const VERSION_MANIFEST_URL: &str =
+    "https://launchermeta.mojang.com/mc/game/version_manifest.json";
 
 /// Type of Minecraft versions
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash, Serialize, Deserialize)]

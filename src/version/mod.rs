@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2023. Rob Bailey                                              /
 // This Source Code Form is subject to the terms of the Mozilla Public         /
@@ -11,17 +10,19 @@
 //! These files specify info about how to run the game, and are fetched from the URLs specified in
 //! the version manifest.
 
-pub mod rule;
-pub mod logging;
 pub mod library;
+pub mod logging;
+pub mod rule;
 
 use std::fmt;
 use std::str::FromStr;
-use serde::{de, Deserialize, Deserializer, Serialize};
-use serde::de::{Error, MapAccess, SeqAccess, Visitor};
+
 use library::Library;
 use logging::Logging;
 use rule::Rule;
+use serde::de::{Error, MapAccess, SeqAccess, Visitor};
+use serde::{de, Deserialize, Deserializer, Serialize};
+
 use crate::VersionKind;
 
 
@@ -37,7 +38,8 @@ struct ArrayOrStringHelper(pub Vec<String>);
 /// deserialize either an array of strings or a single string into always a vector of strings
 impl<'de> Deserialize<'de> for ArrayOrStringHelper {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where D: Deserializer<'de>
+    where
+        D: Deserializer<'de>,
     {
         struct ArrayOrStringVisitor;
 
@@ -49,13 +51,15 @@ impl<'de> Deserialize<'de> for ArrayOrStringHelper {
             }
 
             fn visit_str<E>(self, s: &str) -> Result<Self::Value, E>
-                where E: de::Error
+            where
+                E: de::Error,
             {
                 Ok(ArrayOrStringHelper(vec![s.to_owned()]))
             }
 
             fn visit_seq<S>(self, mut seq: S) -> Result<Self::Value, S::Error>
-                where S: SeqAccess<'de>
+            where
+                S: SeqAccess<'de>,
             {
                 let mut vec = Vec::new();
                 while let Some(elem) = seq.next_element::<String>()? {
@@ -82,7 +86,8 @@ impl FromStr for Argument {
 
 impl<'de> Deserialize<'de> for Argument {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where D: Deserializer<'de>
+    where
+        D: Deserializer<'de>,
     {
         struct ArgumentVisitor;
 
@@ -94,7 +99,8 @@ impl<'de> Deserialize<'de> for Argument {
             }
 
             fn visit_str<E>(self, s: &str) -> Result<Self::Value, E>
-                where E: de::Error
+            where
+                E: de::Error,
             {
                 Ok(Argument {
                     rules: vec![],
@@ -103,7 +109,8 @@ impl<'de> Deserialize<'de> for Argument {
             }
 
             fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
-                where M: MapAccess<'de>
+            where
+                M: MapAccess<'de>,
             {
                 let mut rules = None;
                 let mut value = None;
